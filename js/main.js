@@ -104,3 +104,12 @@ for (i = 0; i < pictures[0].comments.length; i++) {
   socialCommentsElement.querySelectorAll('.social__picture')[i].src = 'img/avatar-' + randomBetweenNumbers(MIN_AVATAR, MAX_AVATAR) + '.svg';
   socialCommentsElement.querySelectorAll('.social__text')[i].textContent = pictures[0].comments[i];
 }
+// Добавляем класс visually-hidden к первому найденому элементу
+var visuallyHidden = function (classString) {
+  document.querySelector(classString).classList.add('visually-hidden');
+  return 'hidden';
+};
+// Прячу счётчик комментариев
+visuallyHidden('.social__comment-count');
+// и загрузку новых комментариев
+visuallyHidden('.social__comments-loader');
