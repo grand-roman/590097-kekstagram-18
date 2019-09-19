@@ -13,9 +13,7 @@ var COMMENTS = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
-var DESCRIPTION = [
-
-];
+var DESCRIPTION = 'Sunflower';
 
 var urls = [];
 
@@ -56,7 +54,7 @@ var createPicture = function (url, minLikes, maxLikes, comments, description) {
     url: url,
     likes: randomBetweenNumbers(minLikes, maxLikes),
     comments: [getRandomElement(comments), getRandomElement(comments)],
-    description: getRandomElement(description)
+    description: description
   };
 
   return picture;
