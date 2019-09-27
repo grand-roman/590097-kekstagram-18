@@ -118,8 +118,8 @@ var effectLevelValueElement = effectLevelElement.querySelector('.effect-level__v
 
 var currentEffectName = effectsListElement.querySelector('.effects__radio:checked').value;
 
-var defaultClass = effectsListElement.querySelector('.effects__preview--none');
-
+var defaultElement = effectsListElement.querySelector('#effect-' + DEFAULT_EFFECT);
+var effectLevelLineElement = effectLevelElement.querySelector('.effect-level__line');
 
 var hashtagElement = document.querySelector('.text__hashtags');
 var descriptionElement = document.querySelector('.text__description');
@@ -290,7 +290,9 @@ function onImageEffectClick(evt) {
   } else {
     effectLevelElement.classList.remove('hidden');
   }
-  setPinPosition(PinValue.MAX);
+  effectLevelValueElement.value = EffectValue.DEFAULT;
+  applyEffect(EffectValue.DEFAULT);
+  setPinPosition();
 }
 
 effectsListElement.addEventListener('click', onImageEffectClick);
@@ -301,19 +303,29 @@ function getFilterValue(effect, value) {
 }
 
 function applyEffect(value) {
-  if (defaultClass) {
+  if (currentEffectName === DEFAULT_EFFECT) {
     imgPreviewElement.style.filter = '';
   } else {
     imgPreviewElement.style.filter = EffectParameter[currentEffectName].PROPERTY + '(' + getFilterValue(currentEffectName, value) + ')';
   }
+  setPinPosition(value);
 }
 
 function setPinPosition(value) {
   effectPinElement.style.left = value + '%';
   effectLevelValueElement.value = Math.round(value);
   effectDepthElement.style.width = effectPinElement.style.left;
-  applyEffect(value);
 }
+
+function setDefaultEffect() {
+  defaultElement.checked = true;
+  imgPreviewElement.classList = '';
+  imgPreviewElement.style.filter = '';
+  imgPreviewElement.classList.add('effects__preview--' + DEFAULT_EFFECT);
+  effectLevelElement.classList.add('hidden');
+  setPinPosition(PinValue.DEFAULT);
+}
+
 
 function checkRepeatHashtags(hashtags) {
   for (var i = 0; i < hashtags.length; i++) {
@@ -392,3 +404,44 @@ descriptionElement.addEventListener('focusin', function () {
 descriptionElement.addEventListener('focusout', function () {
   document.addEventListener('keydown', onFormEscPress);
 });
+
+function onMouseDown(evt) {
+  var startCoordX = evt.clientX;
+  var sliderEffectLineRect = effectLevelLineElement.getBoundingClientRect();
+  var clickedPosition = (startCoordX - sliderEffectLineRect.left) / sliderEffectLineRect.width * 100;
+
+  setPinPosition(clickedPosition);
+  applyEffect(clickedPosition);
+
+  var onMouseMove = function (moveEvt) {
+    var shiftX = startCoordX - moveEvt.clientX;
+    startCoordX = moveEvt.clientX;
+    var movePosition = (effectPinElement.offsetLeft - shiftX) / sliderEffectLineRect.width * 100;
+
+    if (movePosition <= PinValue.MIN) {
+      movePosition = PinValue.MIN;
+      effectLevelValueElement.value = PinValue.MIN;
+    } else if (movePosition >= PinValue.MAX) {
+      movePosition = PinValue.MAX;
+      effectLevelValueElement.value = PinValue.MAX;
+    }
+
+    applyEffect(movePosition);
+  };
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mousemove', onMouseUp);
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+}
+
+effectsListElement.addEventListener('click', onImageEffectClick);
+effectLevelLineElement.addEventListener('mousedown', onMouseDown);
+
+window.effects = {
+  setDefaultEffect: setDefaultEffect
+};
