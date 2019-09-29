@@ -91,8 +91,10 @@ var EffectParameter = {
 
 var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 var picturesBlock = document.querySelector('.pictures');
+
 var bigPicture = document.querySelector('.big-picture');
 var bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
+
 var socialLoader = document.querySelector('.comments-loader');
 var commentsCount = document.querySelector('.social__comment-count');
 socialLoader.classList.add('visually-hidden');
@@ -102,11 +104,14 @@ var commentTemplate = document.querySelector('#comment').content.querySelector('
 var photos = [];
 
 var uploadElement = document.querySelector('.img-upload');
+
 var uploadFileElement = uploadElement.querySelector('#upload-file');
 var uploadPopupElement = uploadElement.querySelector('.img-upload__overlay');
 var uploadPopupCloseElement = uploadElement.querySelector('#upload-cancel');
+
 var imgPreviewWrapperElement = uploadElement.querySelector('.img-upload__preview');
 var imgPreviewElement = imgPreviewWrapperElement.querySelector('.img-upload__preview img');
+
 var scaleElement = uploadElement.querySelector('.img-upload__scale');
 var scaleValueElement = scaleElement.querySelector('.scale__control--value');
 var scaleSmallerElement = scaleElement.querySelector('.scale__control--smaller');
