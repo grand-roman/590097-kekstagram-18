@@ -20,6 +20,10 @@ var Hashtag = {
   MAX_LENGTH: 20
 };
 
+var Descriptions = {
+  MAX_LENGTH: 140
+};
+
 var EffectValue = {
   MAX: 100,
   DEFAULT: 100,
@@ -371,6 +375,28 @@ function hashtagValidity() {
 
 hashtagElement.addEventListener('input', hashtagValidity);
 
+function descriptionValidity() {
+  descriptionElement.style.outline = '';
+  var errorMessage = '';
+  var descriptionValue = descriptionElement.value.trim();
+
+  if (descriptionValue === '') {
+    descriptionElement.setCustomValidity(errorMessage);
+    return;
+  }
+  var descriptions = descriptionValue.toLowerCase().split(' ');
+  descriptions.forEach(function (descriptionItem) {
+    if (descriptionItem.length > Descriptions.MAX_LENGTH) {
+      errorMessage = 'Максимальная длина комментария 140 символов';
+    }
+  });
+
+  descriptionElement.setCustomValidity(errorMessage);
+
+}
+
+descriptionElement.addEventListener('input', descriptionValidity);
+
 function highlightInvalidField(field) {
   if (!field.validity.valid) {
     field.style.outline = '2px solid red';
@@ -386,6 +412,14 @@ uploadSubmitElement.addEventListener('click', function () {
 
 uploadSubmitElement.addEventListener('submit', function () {
   highlightInvalidField(hashtagElement);
+});
+
+uploadSubmitElement.addEventListener('click', function () {
+  highlightInvalidField(descriptionElement);
+});
+
+uploadSubmitElement.addEventListener('submit', function () {
+  highlightInvalidField(descriptionElement);
 });
 
 
