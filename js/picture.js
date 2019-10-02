@@ -2,10 +2,6 @@
 
 (function () {
 
-  var PHOTOS_COUNT = 25;
-
-  var photos = [];
-
   var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
   var picturesBlock = document.querySelector('.pictures');
 
@@ -21,17 +17,18 @@
     return photoElement;
   }
 
-  function appendPhotos() {
+  function onLoadPhotos(photos) {
     var fragment = document.createDocumentFragment();
-    photos = window.data.generatePhotos(PHOTOS_COUNT);
     for (var i = 0; i < photos.length; i++) {
       fragment.appendChild(renderPhoto(photos[i]));
     }
     picturesBlock.appendChild(fragment);
   }
 
-  window.picture = {
-    appendPhotos: appendPhotos
+  var onError = function (errorMessage) {
+    window.error.show(errorMessage);
   };
+
+  window.inBackend.load(onLoadPhotos, onError);
 
 })();
