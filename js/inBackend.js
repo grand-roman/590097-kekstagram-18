@@ -3,7 +3,8 @@
 (function () {
 
   var Url = {
-    GET: 'https://js.dump.academy/kekstagram/data'
+    GET: 'https://js.dump.academy/kekstagram/data',
+    POST: 'https://js.dump.academy/kekstagram/'
   };
 
   var TIMEOUT = 10000;
@@ -48,8 +49,15 @@
     xhr.send();
   };
 
+  var upload = function (data, onLoad, onError) {
+    var xhr = createRequest(onLoad, onError);
+    xhr.open('POST', Url.POST);
+    xhr.send(data);
+  };
+
   window.inBackend = {
-    load: load
+    load: load,
+    upload: upload
   };
 
 })();
