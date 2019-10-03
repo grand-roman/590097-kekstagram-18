@@ -4,11 +4,6 @@
 
   var DISPLAY_COMMENTS = 5;
 
-  var Avatar = {
-    MIN: 1,
-    MAX: 6
-  };
-
   var bigPicture = document.querySelector('.big-picture');
   var socialLoader = document.querySelector('.comments-loader');
   var commentsCount = document.querySelector('.social__comment-count');
@@ -18,8 +13,9 @@
 
   function createComment(comment) {
     var commentElement = commentTemplate.cloneNode(true);
-    commentElement.querySelector('.social__picture').src = 'img/avatar-' + window.util.getRandomNumber(Avatar.MIN, Avatar.MAX) + '.svg';
-    commentElement.querySelector('.social__text').textContent = comment;
+    commentElement.querySelector('.social__picture').src = comment.avatar;
+    commentElement.querySelector('.social__picture').title = comment.name;
+    commentElement.querySelector('.social__text').textContent = comment.message;
     return commentElement;
   }
 

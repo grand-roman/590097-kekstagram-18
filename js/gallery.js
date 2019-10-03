@@ -23,8 +23,6 @@
     window.util.isEscEvent(evt, closePhoto);
   }
 
-  window.picture.appendPhotos();
-
   window.gallery = {
     openPhoto: openPhoto,
     closePhoto: closePhoto
