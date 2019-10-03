@@ -13,6 +13,9 @@
 
   function createComment(comment) {
     var commentElement = commentTemplate.cloneNode(true);
+    commentElement.querySelector('.social__picture').src = comment.avatar;
+    commentElement.querySelector('.social__picture').title = comment.name;
+    commentElement.querySelector('.social__text').textContent = comment.message;
     return commentElement;
   }
 
