@@ -64,10 +64,10 @@
     window.success.show();
   };
 
-  uploadSendButtonElement.addEventListener('submit', function (evt) {
-    evt.preventDefault();
+  uploadSendButtonElement.addEventListener('click', function (evt) {
     window.inBackend.upload(new FormData(formElement), onSuccess, onError);
     uploadSendButtonElement.disabled = true;
+    evt.preventDefault();
   });
 
 })();
