@@ -64,7 +64,7 @@
     window.success.show();
   };
 
-  uploadSendButtonElement.addEventListener('submit', function (evt) {
+  uploadSendButtonElement.addEventListener('click', function (evt) {
     window.inBackend.upload(new FormData(formElement), onSuccess, onError);
     uploadSendButtonElement.disabled = true;
     evt.preventDefault();
