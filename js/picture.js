@@ -82,7 +82,7 @@
   });
 
   function onLoad(data) {
-    //filterElement.classList.remove('img-filters--inactive');
+    filterElement.classList.remove('img-filters--inactive');
     photos = data;
     appendPicture(photos);
   }
