@@ -2,7 +2,7 @@
 (function () {
   var DEBOUNCE_INTERVAL = 500;
 
-  window.noBounce = function (callback) {
+  window.debounce = function (callback) {
     var lastTimeout = null;
 
     return function () {

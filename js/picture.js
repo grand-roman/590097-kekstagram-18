@@ -72,12 +72,12 @@
     });
   }
 
-  var noBounceFilters = window.noBounce(changeFilters);
+  var debounceFilters = window.debounce(changeFilters);
   filterFormElement.addEventListener('click', function (evt) {
     var target = evt.target;
     if (target.tagName === 'BUTTON') {
       changeAcitveClass(target.id);
-      noBounceFilters(evt);
+      debounceFilters(evt);
     }
   });
 
