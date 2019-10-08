@@ -11,6 +11,7 @@
 
   function closePhoto() {
     bigPicture.classList.add('hidden');
+    bigPicture.querySelector('.comments-loader').removeEventListener('click', window.preview.loadComments);
   }
 
   function openPhoto() {
