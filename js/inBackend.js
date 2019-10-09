@@ -43,6 +43,7 @@
     });
     return xhr;
   };
+
   var load = function (onLoad, onError) {
     var xhr = createRequest(onLoad, onError);
     xhr.open('GET', Url.GET);
