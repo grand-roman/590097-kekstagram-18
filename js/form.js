@@ -17,18 +17,21 @@
   function closeForm() {
     uploadPopupElement.classList.add('hidden');
     uploadFileElement.value = null;
+    window.scale.setDefaultScale();
+    window.effects.setDefaultEffect();
     document.removeEventListener('keydown', onFormEscPress);
   }
 
   function openForm() {
     uploadPopupElement.classList.remove('hidden');
     uploadSendButtonElement.disabled = false;
+    window.scale.setDefaultScale();
     document.addEventListener('keydown', onFormEscPress);
   }
 
-  var onFormEscPress = function (evt) {
+  function onFormEscPress(evt) {
     window.util.isEscEvent(evt, closeForm);
-  };
+  }
 
   uploadFormSelectElement.addEventListener('change', function () {
     openForm();
@@ -55,15 +58,15 @@
     document.addEventListener('keydown', onFormEscPress);
   });
 
-  var onError = function (errorMessage) {
+  function onError(errorMessage) {
     closeForm();
     window.error.show(errorMessage);
-  };
+  }
 
-  var onSuccess = function () {
+  function onSuccess() {
     closeForm();
     window.success.show();
-  };
+  }
 
   uploadSendButtonElement.addEventListener('click', function (evt) {
     window.inBackend.upload(new FormData(formElement), onSuccess, onError);

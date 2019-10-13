@@ -10,7 +10,7 @@
   };
 
   var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-  var picturesBlock = document.querySelector('.pictures');
+  var picturesElements = document.querySelector('.pictures');
 
   var filterElement = document.querySelector('.img-filters');
   var filterFormElement = document.querySelector('.img-filters__form');
@@ -30,17 +30,17 @@
 
   function appendPicture(pictures) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < pictures.length; i++) {
-      fragment.appendChild(renderPhoto(pictures[i]));
-    }
-    picturesBlock.appendChild(fragment);
+    pictures.forEach(function (item) {
+      fragment.appendChild(renderPhoto(item));
+    });
+    picturesElements.appendChild(fragment);
   }
 
   function changeFilters(evt) {
     var target = evt.target;
-    var picture = picturesBlock.querySelectorAll('.picture');
+    var picture = picturesElements.querySelectorAll('.picture');
     picture.forEach(function (item) {
-      picturesBlock.removeChild(item);
+      picturesElements.removeChild(item);
     });
     switch (target.id) {
       case 'filter-popular':

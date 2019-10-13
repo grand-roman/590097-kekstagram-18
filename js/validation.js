@@ -82,11 +82,7 @@
   descriptionElement.addEventListener('input', descriptionValidity);
 
   function highlightInvalidField(field) {
-    if (!field.validity.valid) {
-      field.style.outline = '2px solid red';
-    } else {
-      field.style.outline = 'none';
-    }
+    field.style.outline = !field.validity.valid ? '2px solid red' : 'none';
   }
 
   uploadSubmitElement.addEventListener('click', function () {
