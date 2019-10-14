@@ -19,6 +19,7 @@
     uploadFileElement.value = null;
     window.scale.setDefaultScale();
     window.effects.setDefaultEffect();
+    window.validation.setDefaultValidation();
     document.removeEventListener('keydown', onFormEscPress);
   }
 
@@ -61,17 +62,25 @@
   function onError(errorMessage) {
     closeForm();
     window.error.show(errorMessage);
+    window.scale.setDefaultScale();
+    window.effects.setDefaultEffect();
+    window.validation.setDefaultValidation();
   }
 
   function onSuccess() {
     closeForm();
     window.success.show();
+    window.scale.setDefaultScale();
+    window.effects.setDefaultEffect();
+    window.validation.setDefaultValidation();
   }
 
   uploadSendButtonElement.addEventListener('click', function (evt) {
-    window.inBackend.upload(new FormData(formElement), onSuccess, onError);
-    uploadSendButtonElement.disabled = true;
-    evt.preventDefault();
+    if (!hashtagElement.validity.valid && !descriptionElement.validity.valid) {
+      window.inBackend.upload(new FormData(formElement), onSuccess, onError);
+      uploadSendButtonElement.disabled = true;
+      evt.preventDefault();
+    }
   });
 
 })();

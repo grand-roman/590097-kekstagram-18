@@ -29,37 +29,49 @@
     return false;
   }
 
+  function highlightInvalidField(field) {
+    field.style.outline = !field.validity.valid ? '2px solid red' : 'none';
+  }
+
   function hashtagValidity() {
-    hashtagElement.style.outline = '';
     var errorMessage = '';
     var hashtagValue = hashtagElement.value.trim();
 
     if (hashtagValue === '') {
-      hashtagElement.setCustomValidity(errorMessage);
+      hashtagElement.style.outline = 'none';
       return;
     }
+
     var hashtags = hashtagValue.toLowerCase().split(' ');
     hashtags.forEach(function (hashtagItem) {
       if (hashtagItem.charAt(0) !== Hashtag.HASH_SYMBOL) {
         errorMessage = 'Хэштег должен начинаться с символа #';
+        highlightInvalidField(hashtagElement);
       } else if (hashtagItem.indexOf(Hashtag.HASH_SYMBOL, 1) > 1) {
         errorMessage = 'Хэш-теги разделяются пробелами';
+        highlightInvalidField(hashtagElement);
       } else if (hashtagItem.charAt(0) === Hashtag.HASH_SYMBOL && hashtagItem.length === 1) {
         errorMessage = 'Хеш-тег не может состоять только из одной решётки';
+        highlightInvalidField(hashtagElement);
       } else if (hashtags.length > Hashtag.QUANITY) {
         errorMessage = 'Допустимое количество  хэштегов  не более 5';
+        highlightInvalidField(hashtagElement);
       } else if (hashtagItem.length > Hashtag.MAX_LENGTH) {
         errorMessage = 'Максимальная длина одного хэш-тега 20 символов, включая решётку';
+        highlightInvalidField(hashtagElement);
       } else if (checkRepeatHashtags(hashtags)) {
         errorMessage = 'Хэштеги не должны повторяться';
+        highlightInvalidField(hashtagElement);
+      } else {
+        hashtagElement.style.outline = 'none';
       }
     });
 
     hashtagElement.setCustomValidity(errorMessage);
+    hashtagElement.reportValidity();
   }
 
   function descriptionValidity() {
-    descriptionElement.style.outline = '';
     var errorMessage = '';
     var descriptionValue = descriptionElement.value.trim();
 
@@ -71,34 +83,28 @@
     descriptions.forEach(function (descriptionItem) {
       if (descriptionItem.length > Descriptions.MAX_LENGTH) {
         errorMessage = 'Максимальная длина комментария 140 символов';
+        highlightInvalidField(descriptionElement);
+      } else {
+        descriptionElement.style.outline = 'none';
       }
     });
-
     descriptionElement.setCustomValidity(errorMessage);
+    descriptionElement.reportValidity();
 
+  }
+
+  function setDefaultValidation() {
+    hashtagElement.value = '';
+    descriptionElement.value = '';
+    hashtagElement.style.outline = 'none';
   }
 
   hashtagElement.addEventListener('input', hashtagValidity);
   descriptionElement.addEventListener('input', descriptionValidity);
 
-  function highlightInvalidField(field) {
-    field.style.outline = !field.validity.valid ? '2px solid red' : 'none';
-  }
 
-  uploadSubmitElement.addEventListener('click', function () {
-    highlightInvalidField(hashtagElement);
-  });
-
-  uploadSubmitElement.addEventListener('submit', function () {
-    highlightInvalidField(hashtagElement);
-  });
-
-  uploadSubmitElement.addEventListener('click', function () {
-    highlightInvalidField(descriptionElement);
-  });
-
-  uploadSubmitElement.addEventListener('submit', function () {
-    highlightInvalidField(descriptionElement);
-  });
+  window.validation = {
+    setDefaultValidation: setDefaultValidation,
+  };
 
 })();

@@ -10,7 +10,9 @@
       var imgPreviewElement = uploadElement.querySelector('.img-upload__preview img');
 
       var file = uploadFileElement.files[0];
-      var filename = file ? '' : file.name.toLowerCase();
+      if (file) {
+        var filename = file.name.toLowerCase();
+      }
 
       var types = FILE_TYPES.some(function (it) {
         return filename.endsWith(it);
