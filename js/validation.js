@@ -13,9 +13,9 @@
   };
 
   var uploadElement = document.querySelector('.img-upload');
+  var uploadSubmitElement = uploadElement.querySelector('.img-upload__submit');
   var hashtagElement = document.querySelector('.text__hashtags');
   var descriptionElement = document.querySelector('.text__description');
-  var uploadSubmitElement = uploadElement.querySelector('.img-upload__submit');
 
   function checkRepeatHashtags(hashtags) {
     for (var i = 0; i < hashtags.length; i++) {
@@ -38,6 +38,7 @@
     var hashtagValue = hashtagElement.value.trim();
 
     if (hashtagValue === '') {
+      hashtagElement.setCustomValidity(errorMessage);
       hashtagElement.style.outline = 'none';
       return;
     }
@@ -77,6 +78,7 @@
 
     if (descriptionValue === '') {
       descriptionElement.setCustomValidity(errorMessage);
+      descriptionElement.style.outline = 'none';
       return;
     }
     var descriptions = descriptionValue.toLowerCase().split(' ');
@@ -102,6 +104,15 @@
   hashtagElement.addEventListener('input', hashtagValidity);
   descriptionElement.addEventListener('input', descriptionValidity);
 
+  uploadSubmitElement.addEventListener('click', function () {
+    highlightInvalidField(hashtagElement);
+    highlightInvalidField(descriptionElement);
+  });
+
+  uploadSubmitElement.addEventListener('submit', function () {
+    highlightInvalidField(hashtagElement);
+    highlightInvalidField(descriptionElement);
+  });
 
   window.validation = {
     setDefaultValidation: setDefaultValidation,

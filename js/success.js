@@ -22,12 +22,14 @@
     window.util.isEscEvent(evt, closeModal);
   }
 
+  function onSuccessButtonClick() {
+    closeModal();
+  }
+
   function showModalSucces() {
     document.addEventListener('keydown', onModalEscPress);
     mainElement.appendChild(successModalTemplate);
-    successModalTemplate.querySelector('.success__button').addEventListener('click', function () {
-      closeModal();
-    });
+    successModalTemplate.querySelector('.success__button').addEventListener('click', onSuccessButtonClick);
     successModalTemplate.addEventListener('click', onDocumentClick);
   }
 

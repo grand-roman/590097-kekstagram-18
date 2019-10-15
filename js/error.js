@@ -22,12 +22,14 @@
     window.util.isEscEvent(evt, closeModal);
   }
 
+  function onErrorButtonClick() {
+    closeModal();
+  }
+
   function showModalError(text) {
     mainElement.appendChild(errorModalTemplate);
     errorModalTemplate.querySelector('.error__title').textContent = text;
-    errorModalTemplate.querySelector('.error__button').addEventListener('click', function () {
-      closeModal();
-    });
+    errorModalTemplate.querySelector('.error__button').addEventListener('click', onErrorButtonClick);
     errorModalTemplate.addEventListener('click', onDocumentClick);
     document.addEventListener('keydown', onModalEscPress);
   }
