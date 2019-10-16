@@ -53,8 +53,7 @@
 
   var uploadElement = document.querySelector('.img-upload');
 
-  var imgPreviewWrapperElement = uploadElement.querySelector('.img-upload__preview');
-  var imgPreviewElement = imgPreviewWrapperElement.querySelector('.img-upload__preview img');
+  var imgPreviewElement = uploadElement.querySelector('.img-upload__preview img');
 
   var effectLevelElement = uploadElement.querySelector('.effect-level');
   var effectsListElement = uploadElement.querySelector('.effects__list');
@@ -68,11 +67,7 @@
   var effectLevelLineElement = effectLevelElement.querySelector('.effect-level__line');
 
   function applyEffect(value) {
-    if (currentEffectName === DEFAULT_EFFECT) {
-      imgPreviewElement.style.filter = '';
-    } else {
-      imgPreviewElement.style.filter = EffectParameter[currentEffectName].PROPERTY + '(' + getFilterValue(currentEffectName, value) + ')';
-    }
+    imgPreviewElement.style.filter = currentEffectName === DEFAULT_EFFECT ? '' : EffectParameter[currentEffectName].PROPERTY + '(' + getFilterValue(currentEffectName, value) + ')';
     setPinPosition(value);
   }
 
@@ -123,7 +118,7 @@
     setPinPosition(clickedPosition);
     applyEffect(clickedPosition);
 
-    var onMouseMove = function (moveEvt) {
+    function onMouseMove(moveEvt) {
       var shiftX = startCoordX - moveEvt.clientX;
       startCoordX = moveEvt.clientX;
       var movePosition = (effectPinElement.offsetLeft - shiftX) / sliderEffectLineRect.width * 100;
@@ -137,13 +132,13 @@
       }
 
       applyEffect(movePosition);
-    };
+    }
 
-    var onMouseUp = function (upEvt) {
+    function onMouseUp(upEvt) {
       upEvt.preventDefault();
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mousemove', onMouseUp);
-    };
+    }
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
