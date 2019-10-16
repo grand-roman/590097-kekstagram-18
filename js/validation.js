@@ -43,7 +43,9 @@
       return;
     }
 
-    var hashtags = hashtagValue.toLowerCase().split(' ');
+    var hashtags = hashtagValue.toLowerCase().trim().split(' ').map(function (hashtag) {
+      return hashtag.trim();
+    }).filter(Boolean);
     hashtags.forEach(function (hashtagItem) {
       if (hashtagItem.charAt(0) !== Hashtag.HASH_SYMBOL) {
         errorMessage = 'Хэштег должен начинаться с символа #';

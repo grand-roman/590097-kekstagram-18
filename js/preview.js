@@ -61,8 +61,10 @@
     bigPictureElement.querySelector('.comments-loader').addEventListener('click', function () {
       showCommentsCount(photo.comments);
     });
-    if (bigPictureElement.querySelectorAll('.social__comment.visually-hidden').length > 1) {
+    if (bigPictureElement.querySelectorAll('.social__comment.visually-hidden').length >= 1) {
       socialLoaderElement.classList.remove('visually-hidden');
+    } else {
+      socialLoaderElement.classList.add('visually-hidden');
     }
   }
 
